@@ -9,18 +9,18 @@ class database:
 
     def create_table(self, user_id):
         with self.connection:
-            self.cursor.execute("CREATE TABLE IF NOT EXISTS id" + str(user_id) + " (user_id text PRIMARY KEY)")
+            self.cursor.execute("CREATE TABLE IF NOT EXISTS id" + (user_id) + " (user_id text PRIMARY KEY)")
 
     def add_user(self, friends, user_id):
         with self.connection:
             for friend_id in friends['response']['items']:
-                self.cursor.execute("INSERT OR REPLACE INTO id" + str(user_id) + "(user_id) VALUES (?)", (friend_id,))
+                self.cursor.execute("INSERT OR REPLACE INTO id" + (user_id) + "(user_id) VALUES (?)", (friend_id,))
 
     def intersect(self, user_ids):
         with self.connection:
             query = ""
             for user_id in user_ids:
-                query += "SELECT * FROM id" + str(user_id) + " INTERSECT "
+                query += "SELECT * FROM id" + (user_id) + " INTERSECT "
             query = query[0:-10]
             return self.cursor.execute(query).fetchall()
 
